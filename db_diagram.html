@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Diagram - Peminjaman</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .diagram-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow-x: auto;
+        }
+        
+        .diagram-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-card li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .info-card li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+        }
+        
+        .table-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .table-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .table-item h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .table-item p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        
+        .legend {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .legend h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+        
+        .legend-symbol {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+        
+        .pk { background: #667eea; }
+        .fk { background: #f5a623; }
+        .regular { background: #4CAF50; }
+        
+        footer {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            .mermaid { font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Database Diagram</h1>
+            <p>Sistem Manajemen Peminjaman Sarpras</p>
+        </header>
+        
+        <div class="diagram-section">
+            <h2>Entity Relationship Diagram (ERD)</h2>
+            <div class="mermaid">
+                erDiagram
+                    USERS ||--o{ PEMINJAMAN : "membuat"
+                    USERS ||--o{ ACTIVITY_LOGS : "melakukan"
+                    USERS ||--o{ PENGADUAN : "membuat"
+                    USERS ||--o{ PENGADUAN_PROGRESS : "menambah"
+                    USERS ||--o{ INSPECTION_CHECKLIST_TEMPLATES : "membuat"
+                    USERS ||--o{ COMPLIANCE_REPORTS : "membuat"
+                    USERS ||--o{ CROSS_LOCATION_BORROWINGS : "approve"
+                    LOCATIONS ||--o{ SARPRAS : "menyimpan"
+                    LOCATIONS ||--o{ CROSS_LOCATION_BORROWINGS : "sumber"
+                    LOCATIONS ||--o{ CROSS_LOCATION_BORROWINGS : "tujuan"
+                    KATEGORI_SARPRAS ||--o{ SARPRAS : "kategori"
+                    SARPRAS ||--o{ SARPRAS_DETAILS : "memiliki"
+                    SARPRAS_DETAILS ||--o{ PEMINJAMAN : "dipinjam"
+                    SARPRAS_DETAILS ||--o{ RIWAYAT_KONDISI : "mencatat"
+                    PEMINJAMAN ||--o{ RIWAYAT_KONDISI : "melacak"
+                    PEMINJAMAN ||--o{ PENGADUAN : "memicu"
+                    PEMINJAMAN ||--o{ PEMINJAMAN_DETAIL_UNITS : "detail"
+                    PEMINJAMAN ||--o{ CROSS_LOCATION_BORROWINGS : "permintaan"
+                    PENGADUAN ||--o{ PENGADUAN_PROGRESS : "tracking"
+                    INSPECTION_CHECKLIST_TEMPLATES ||--o{ INSPECTION_CHECKLIST_ITEMS : "memiliki"
+                    REGISTERED_IDENTITIES ||--o{ USERS : "identitas"
+                    
+                    USERS {
+                        bigint id PK
+                        string email
+                        string name
+                        string nip
+                        string nisn
+                        string kelas
+                        enum role
+                        string avatar
+                        timestamp created_at
+                    }
+                    
+                    LOCATIONS {
+                        bigint id PK
+                        string nama
+                        string kode
+                        text alamat
+                        string tipe
+                        time jam_buka
+                        time jam_tutup
+                        int durasi_max_pinjam
+                        bigint penanggung_jawab_id FK
+                        boolean is_active
+                    }
+                    
+                    KATEGORI_SARPRAS {
+                        bigint id PK
+                        string nama
+                        string kode
+                        text deskripsi
+                        string icon
+                        boolean is_active
+                    }
+                    
+                    SARPRAS {
+                        bigint id PK
+                        string nama
+                        string kode
+                        text deskripsi
+                        bigint kategori_id FK
+                        bigint location_id FK
+                        string type
+                        string status
+                        bigint quantity
+                        text spesifikasi
+                    }
+                    
+                    SARPRAS_DETAILS {
+                        bigint id PK
+                        bigint sarpras_id FK
+                        string nomor_identitas
+                        string status_kondisi
+                        date tahun_perolehan
+                        text gambar
+                        string merk
+                        string model
+                    }
+                    
+                    PEMINJAMAN {
+                        bigint id PK
+                        bigint user_id FK
+                        string nomor_peminjaman
+                        string nomor_pengembalian
+                        date tanggal_pinjam
+                        date tanggal_kembali
+                        date tanggal_dikembalikan
+                        enum status
+                        text keperluan
+                        bigint sarpras_detail_id FK
+                    }
+                    
+                    PEMINJAMAN_DETAIL_UNITS {
+                        bigint id PK
+                        bigint peminjaman_id FK
+                        bigint sarpras_detail_id FK
+                        string status
+                    }
+                    
+                    RIWAYAT_KONDISI {
+                        bigint id PK
+                        bigint peminjaman_id FK
+                        bigint sarpras_detail_id FK
+                        enum kondisi
+                        text catatan
+                        timestamp tanggal
+                    }
+                    
+                    PENGADUAN {
+                        bigint id PK
+                        bigint user_id FK
+                        bigint peminjaman_id FK
+                        string nomor_pengaduan
+                        string kategori
+                        text deskripsi
+                        enum status
+                    }
+                    
+                    PENGADUAN_PROGRESS {
+                        bigint id PK
+                        bigint pengaduan_id FK
+                        bigint user_id FK
+                        text update
+                        timestamp created_at
+                    }
+                    
+                    ACTIVITY_LOGS {
+                        bigint id PK
+                        bigint user_id FK
+                        string action
+                        string model_type
+                        bigint model_id
+                        text deskripsi
+                        json data_lama
+                        json data_baru
+                    }
+                    
+                    INSPECTION_CHECKLIST_TEMPLATES {
+                        bigint id PK
+                        bigint generated_by FK
+                        string nama
+                        string kategori
+                        text deskripsi
+                        boolean is_active
+                    }
+                    
+                    INSPECTION_CHECKLIST_ITEMS {
+                        bigint id PK
+                        bigint template_id FK
+                        string nama_item
+                        text deskripsi
+                        int urutan
+                    }
+                    
+                    COMPLIANCE_REPORTS {
+                        bigint id PK
+                        bigint generated_by FK
+                        string report_type
+                        date period_start
+                        date period_end
+                        string format
+                        string file_path
+                    }
+                    
+                    CROSS_LOCATION_BORROWINGS {
+                        bigint id PK
+                        bigint peminjaman_id FK
+                        bigint source_location_id FK
+                        bigint destination_location_id FK
+                        enum status
+                        bigint approved_by FK
+                    }
+                    
+                    REGISTERED_IDENTITIES {
+                        bigint id PK
+                        string identifier_value
+                        string identifier_type
+                        string name
+                        string kelas
+                    }
+            </div>
+            
+            <div class="legend">
+                <h4>Keterangan:</h4>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-symbol pk"></div>
+                        <span>Primary Key (PK)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-symbol fk"></div>
+                        <span>Foreign Key (FK)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-symbol regular"></div>
+                        <span>Regular Column</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="diagram-section">
+            <h2>📋 Daftar Tabel Database</h2>
+            <div class="table-list">
+                <div class="table-item">
+                    <h4>users</h4>
+                    <p><strong>Fungsi:</strong> Menyimpan data pengguna sistem</p>
+                    <p><strong>Kolom utama:</strong> id, email, name, role, nip, nisn, kelas</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>peminjaman</h4>
+                    <p><strong>Fungsi:</strong> Mencatat transaksi peminjaman barang</p>
+                    <p><strong>Kolom utama:</strong> id, nomor_peminjaman, user_id, status, tanggal_pinjam</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>sarpras</h4>
+                    <p><strong>Fungsi:</strong> Data master sarana dan prasarana</p>
+                    <p><strong>Kolom utama:</strong> id, nama, kode, kategori_id, location_id</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>sarpras_details</h4>
+                    <p><strong>Fungsi:</strong> Detail unit individual dari setiap barang</p>
+                    <p><strong>Kolom utama:</strong> id, sarpras_id, nomor_identitas, status_kondisi</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>locations</h4>
+                    <p><strong>Fungsi:</strong> Data lokasi penyimpanan barang</p>
+                    <p><strong>Kolom utama:</strong> id, nama, kode, tipe, jam_buka, jam_tutup</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>kategori_sarpras</h4>
+                    <p><strong>Fungsi:</strong> Kategori/jenis barang</p>
+                    <p><strong>Kolom utama:</strong> id, nama, kode, deskripsi, icon</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>riwayat_kondisi</h4>
+                    <p><strong>Fungsi:</strong> Tracking kondisi barang sepanjang waktu</p>
+                    <p><strong>Kolom utama:</strong> id, peminjaman_id, sarpras_detail_id, kondisi</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>pengaduan</h4>
+                    <p><strong>Fungsi:</strong> Laporan kerusakan atau masalah barang</p>
+                    <p><strong>Kolom utama:</strong> id, user_id, peminjaman_id, nomor_pengaduan</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>pengaduan_progress</h4>
+                    <p><strong>Fungsi:</strong> Update progress penanganan pengaduan</p>
+                    <p><strong>Kolom utama:</strong> id, pengaduan_id, user_id, update</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>activity_logs</h4>
+                    <p><strong>Fungsi:</strong> Audit trail semua aktivitas pengguna</p>
+                    <p><strong>Kolom utama:</strong> id, user_id, action, model_type, model_id</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>inspection_checklist_templates</h4>
+                    <p><strong>Fungsi:</strong> Template checklist inspeksi barang</p>
+                    <p><strong>Kolom utama:</strong> id, nama, kategori, deskripsi</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>inspection_checklist_items</h4>
+                    <p><strong>Fungsi:</strong> Item-item dalam checklist template</p>
+                    <p><strong>Kolom utama:</strong> id, template_id, nama_item, urutan</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>compliance_reports</h4>
+                    <p><strong>Fungsi:</strong> Laporan kepatuhan dan audit</p>
+                    <p><strong>Kolom utama:</strong> id, report_type, generated_by, period_start</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>cross_location_borrowings</h4>
+                    <p><strong>Fungsi:</strong> Permintaan peminjaman antar lokasi</p>
+                    <p><strong>Kolom utama:</strong> id, peminjaman_id, source_location_id</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>peminjaman_detail_units</h4>
+                    <p><strong>Fungsi:</strong> Detail unit individual dalam peminjaman</p>
+                    <p><strong>Kolom utama:</strong> id, peminjaman_id, sarpras_detail_id</p>
+                </div>
+                
+                <div class="table-item">
+                    <h4>registered_identities</h4>
+                    <p><strong>Fungsi:</strong> Data identitas terdaftar (NIP/NISN)</p>
+                    <p><strong>Kolom utama:</strong> id, identifier_value, identifier_type</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="diagram-section">
+            <h2>🔗 Hubungan Antar Tabel</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Peminjaman & Detail</h3>
+                    <ul>
+                        <li>Peminjaman → Users (pembuat peminjaman)</li>
+                        <li>Peminjaman → Sarpras Details (barang yang dipinjam)</li>
+                        <li>Peminjaman → Peminjaman Detail Units (detail unit)</li>
+                        <li>Peminjaman → Cross Location Borrowings</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Inventory & Kondisi</h3>
+                    <ul>
+                        <li>Sarpras → Kategori Sarpras</li>
+                        <li>Sarpras → Locations (lokasi penyimpanan)</li>
+                        <li>Sarpras → Sarpras Details (unit individual)</li>
+                        <li>Sarpras Details → Riwayat Kondisi</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Pelaporan & Audit</h3>
+                    <ul>
+                        <li>Users → Activity Logs (audit trail)</li>
+                        <li>Pengaduan → Pengaduan Progress (tracking)</li>
+                        <li>Users → Compliance Reports (pembuat laporan)</li>
+                        <li>Peminjaman → Pengaduan (trigger pengaduan)</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Inspeksi & Lokasi</h3>
+                    <ul>
+                        <li>Users → Inspection Templates (pembuat)</li>
+                        <li>Templates → Checklist Items (detail checklist)</li>
+                        <li>Cross Location Borrowings → Locations (sumber & tujuan)</li>
+                        <li>Locations → Users (penanggung jawab)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="diagram-section">
+            <h2>📊 Alur Proses Utama</h2>
+            <div class="mermaid">
+                flowchart TD
+                    A["👤 User Membuat Peminjaman"] --> B["📝 Data masuk tabel PEMINJAMAN"]
+                    B --> C{Peminjaman Disetujui?}
+                    C -->|Ya| D["📦 Update status: DIPINJAM"]
+                    C -->|Tidak| E["❌ Update status: DITOLAK"]
+                    D --> F["📅 Barang dalam PEMINJAMAN_DETAIL_UNITS"]
+                    F --> G["⚠️ User bisa laporkan kerusakan ke PENGADUAN"]
+                    G --> H["🔍 Tracking via PENGADUAN_PROGRESS"]
+                    D --> I["🕐 Waktu pengembalian dimulai"]
+                    I --> J{Barang dikembalikan?}
+                    J -->|Ya| K["📋 Update RIWAYAT_KONDISI"]
+                    K --> L["✅ Status: DIKEMBALIKAN"]
+                    L --> M["📊 Dicatat di ACTIVITY_LOGS"]
+                    J -->|Tidak| N["⏰ Pengingat otomatis via reminder_columns"]
+                    
+                    style A fill:#667eea,color:#fff
+                    style B fill:#667eea,color:#fff
+                    style D fill:#4CAF50,color:#fff
+                    style E fill:#f44336,color:#fff
+                    style L fill:#4CAF50,color:#fff
+                    style M fill:#2196F3,color:#fff
+            </div>
+        </div>
+        
+        <div class="diagram-section">
+            <h2>🔐 Keamanan & Audit</h2>
+            <div class="mermaid">
+                flowchart LR
+                    A["Setiap Aksi Pengguna"] --> B["ACTIVITY_LOGS"]
+                    B --> C["User ID"]
+                    B --> D["Action"]
+                    B --> E["Model Type"]
+                    B --> F["Data Lama"]
+                    B --> G["Data Baru"]
+                    B --> H["IP Address"]
+                    
+                    style A fill:#f5a623,color:#000
+                    style B fill:#667eea,color:#fff
+                    style C fill:#4CAF50,color:#fff
+                    style D fill:#4CAF50,color:#fff
+                    style E fill:#4CAF50,color:#fff
+                    style F fill:#2196F3,color:#fff
+                    style G fill:#2196F3,color:#fff
+                    style H fill:#2196F3,color:#fff
+            </div>
+        </div>
+        
+        <footer>
+            <p>Database Diagram Generator | Sistem Manajemen Peminjaman Sarpras | Dibuat dengan Mermaid.js</p>
+            <p style="margin-top: 10px; font-size: 0.8em;">Terakhir diupdate: 09 Februari 2026</p>
+        </footer>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>
